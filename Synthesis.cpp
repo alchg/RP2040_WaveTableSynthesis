@@ -28,6 +28,13 @@ void Synthesis::initializeWave() {
           case SINE_WAVE:
             waveform[i][j][k] = j * sin(2 * PI * k / SAMPLE);
             break;
+          case TRIANGLE_WAVE:
+            if(k / (SAMPLE / 2)){
+              waveform[i][j][k] = 0;
+            }else{
+              waveform[i][j][k] = (k / (SAMPLE / 4)) ? (VOLUME_MAX - ((k - (SAMPLE / 4)) / 2)) * (float(j) / float(VOLUME_MAX)) : (k / 2) * (float(j) / float(VOLUME_MAX));
+            }
+            break;
           case SAMPLE_WAVE:
             waveform[i][j][k] = (k < SAMPLE/2) ? j * (2 * k) / SAMPLE : j * (2 * (SAMPLE - k)) / SAMPLE;
             break;

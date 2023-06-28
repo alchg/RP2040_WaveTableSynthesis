@@ -29,7 +29,7 @@ void setup()
   synthesis.begin();
   // setWave
   // CH1 - CH5
-  // SHORT_WAVE,SAWTOOTH_WAVE,SINE_WAVE,SAMPLE_WAVE,NOISE_WAVE
+  // SHORT_WAVE,SAWTOOTH_WAVE,SINE_WAVE,TRIANGLE_WAVE,SAMPLE_WAVE,NOISE_WAVE
   synthesis.setWave(CH1,NOISE_WAVE);
   // setVolume
   // CH1 - CH5

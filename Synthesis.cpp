@@ -113,7 +113,9 @@ void Synthesis::pwmIrq(){
   
   level = 0;
   for(int i = 0;i < CHANNELS;i++){
-    level = level + waveform[channel_wave[i]][vol[i]][work[i]>>9];
+    if(note[i] != 0){ // 0:NOTE_NONE
+      level = level + waveform[channel_wave[i]][vol[i]][work[i]>>9];
+    }
   }
 
   if(isEven(pwm_pin)){

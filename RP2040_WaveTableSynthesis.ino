@@ -29,16 +29,16 @@ void setup()
   synthesis.begin();
   // setWave
   // CH1 - CH5
-  // SHORT_WAVE,SAWTOOTH_WAVE,SINE_WAVE,TRIANGLE_WAVE,SAMPLE_WAVE,NOISE_WAVE
+  // SHORT_WAVE,SAWTOOTH_WAVE,SINE_WAVE,TRIANGLE_WAVE,SAMPLE_WAVE1,SAMPLE_WAVE2,NOISE_WAVE
   synthesis.setWave(CH1,NOISE_WAVE);
   // setVolume
   // CH1 - CH5
   // 0 - 16(VOLUME_MAX)
   synthesis.setVolume(CH1,2);
   
-  synthesis.setWave(CH2,SAMPLE_WAVE);
-  synthesis.setWave(CH3,SAMPLE_WAVE);
-  synthesis.setWave(CH4,SAMPLE_WAVE);
+  synthesis.setWave(CH2,SAMPLE_WAVE1);
+  synthesis.setWave(CH3,SAMPLE_WAVE1);
+  synthesis.setWave(CH4,SAMPLE_WAVE1);
   
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);

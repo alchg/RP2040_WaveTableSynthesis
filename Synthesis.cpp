@@ -35,8 +35,11 @@ void Synthesis::initializeWave() {
               waveform[i][j][k] = (k / (SAMPLE / 4)) ? (VOLUME_MAX - ((k - (SAMPLE / 4)) / 2)) * (float(j) / float(VOLUME_MAX)) : (k / 2) * (float(j) / float(VOLUME_MAX));
             }
             break;
-          case SAMPLE_WAVE:
+          case SAMPLE_WAVE1:
             waveform[i][j][k] = (k < SAMPLE/2) ? j * (2 * k) / SAMPLE : j * (2 * (SAMPLE - k)) / SAMPLE;
+            break;
+          case SAMPLE_WAVE2:
+            waveform[i][j][k] = (k < SAMPLE/4) ? j * (4 * k) / SAMPLE : (k < SAMPLE*3/4) ? j : j * (4 * (SAMPLE - k)) / SAMPLE;
             break;
           case NOISE_WAVE:
             waveform[i][j][k] = random(j);

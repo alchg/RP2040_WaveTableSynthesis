@@ -10,7 +10,7 @@ Synthesis::Synthesis(uint16_t pin) {
   pwm_pin = pin;
   initializeWave();
   for(int i = 0;i < CHANNELS;i++){
-    vol[i] = 7;
+    vol[i] = VOLUME_MAX - 1;
   }
 }
 
@@ -19,27 +19,25 @@ void Synthesis::initializeWave() {
     for (uint8_t j = 0; j < VOLUME_MAX; j++) {
       for (uint8_t k = 0; k < SAMPLE; k++) {
         switch (i) {
-          case SHORT_WAVE:
-            waveform[i][j][k] = (k < SAMPLE/2) ? j : 0;
+          case SQUARE_WAVE:
+            waveform[i][j][k] = (k < SAMPLE/2) ? VOLUME_MAX / 2 + j / 2 : VOLUME_MAX / 2 - j / 2;
             break;
           case SAWTOOTH_WAVE:
-            waveform[i][j][k] = j * k / SAMPLE; 
+            waveform[i][j][k] = (k < SAMPLE/2) ? j * k / SAMPLE + VOLUME_MAX / 2 : VOLUME_MAX / 2 - j * (SAMPLE / 2 - (k - SAMPLE / 2)) / SAMPLE;
             break;
           case SINE_WAVE:
-            waveform[i][j][k] = j * sin(2 * PI * k / SAMPLE);
+            waveform[i][j][k] = (j * sin(2 * PI * k / SAMPLE) + VOLUME_MAX) / 2;
             break;
           case TRIANGLE_WAVE:
-            if(k / (SAMPLE / 2)){
-              waveform[i][j][k] = 0;
-            }else{
-              waveform[i][j][k] = (k / (SAMPLE / 4)) ? (VOLUME_MAX - ((k - (SAMPLE / 4)) / 2)) * (float(j) / float(VOLUME_MAX)) : (k / 2) * (float(j) / float(VOLUME_MAX));
+            if (k < SAMPLE / 4) {
+              waveform[i][j][k] = VOLUME_MAX / 2 + j * k / (SAMPLE / 2);
+            }else if (k < SAMPLE * 2 / 4) {
+              waveform[i][j][k] = VOLUME_MAX / 2 + j * ((SAMPLE / 2) - k) / (SAMPLE / 2);
+            }else if (k < SAMPLE * 3 / 4) {
+              waveform[i][j][k] =VOLUME_MAX / 2 - j * (k - (SAMPLE / 2)) / (SAMPLE / 2);
+            } else {
+              waveform[i][j][k] =VOLUME_MAX / 2 - j * ((SAMPLE / 2) - (k - (SAMPLE / 2))) / (SAMPLE / 2);
             }
-            break;
-          case SAMPLE_WAVE1:
-            waveform[i][j][k] = (k < SAMPLE/2) ? j * (2 * k) / SAMPLE : j * (2 * (SAMPLE - k)) / SAMPLE;
-            break;
-          case SAMPLE_WAVE2:
-            waveform[i][j][k] = (k < SAMPLE/4) ? j * (4 * k) / SAMPLE : (k < SAMPLE*3/4) ? j : j * (4 * (SAMPLE - k)) / SAMPLE;
             break;
           case NOISE_WAVE:
             waveform[i][j][k] = random(j);
@@ -78,7 +76,7 @@ void Synthesis::begin(){
   pwm_set_clkdiv(slice_num, 7.8125);
   //pwm_set_wrap(slice_num, 255);
   pwm_set_wrap(slice_num, 256);
-
+  
   if(isEven(pwm_pin)){
     pwm_set_chan_level(slice_num, PWM_CHAN_A, 0);
   }else{
@@ -101,7 +99,6 @@ void Synthesis::setWave(uint16_t ch,uint16_t value){
     channel_wave[ch] = value;
   }
 }
-
 
 void Synthesis::pwmIrq(){
   pwm_clear_irq(slice_num);

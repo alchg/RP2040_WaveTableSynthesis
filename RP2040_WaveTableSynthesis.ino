@@ -1,4 +1,3 @@
-#include <hardware/pwm.h>
 #include "Tone.h"
 #include "Synthesis.h"
 
@@ -29,16 +28,16 @@ void setup()
   synthesis.begin();
   // setWave
   // CH1 - CH5
-  // SHORT_WAVE,SAWTOOTH_WAVE,SINE_WAVE,TRIANGLE_WAVE,SAMPLE_WAVE1,SAMPLE_WAVE2,NOISE_WAVE
+  // SQUARE_WAVE,SAWTOOTH_WAVE,SINE_WAVE,TRIANGLE_WAVE,NOISE_WAVE
   synthesis.setWave(CH1,NOISE_WAVE);
   // setVolume
   // CH1 - CH5
   // 0 - 16(VOLUME_MAX)
   synthesis.setVolume(CH1,2);
   
-  synthesis.setWave(CH2,SAMPLE_WAVE1);
-  synthesis.setWave(CH3,SAMPLE_WAVE1);
-  synthesis.setWave(CH4,SAMPLE_WAVE1);
+  synthesis.setWave(CH2,SINE_WAVE);
+  synthesis.setWave(CH3,SINE_WAVE);
+  synthesis.setWave(CH4,SINE_WAVE);
   
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
@@ -46,6 +45,7 @@ void setup()
 
 void loop()
 {
+
   // setNote
   // CH1 - CH5
   // NOTE_NONE,NOTE_A0 - NOTE_C8,NOTE_20000
@@ -110,4 +110,6 @@ void loop()
   synthesis.setNote(CH2,NOTE_NONE);
   synthesis.setNote(CH3,NOTE_NONE);
   synthesis.setNote(CH4,NOTE_NONE);
+  delay(4000);
+  
 }

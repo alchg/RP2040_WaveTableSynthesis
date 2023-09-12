@@ -1,17 +1,15 @@
 #ifndef SYNTHESIS_H
 #define SYNTHESIS_H
 
-#define WAVE_TYPES    7
-#define SHORT_WAVE    0
+#define WAVE_TYPES    5
+#define SQUARE_WAVE   0
 #define SAWTOOTH_WAVE 1
 #define SINE_WAVE     2
 #define TRIANGLE_WAVE 3
-#define SAMPLE_WAVE1  4
-#define SAMPLE_WAVE2  5
-#define NOISE_WAVE    6
+#define NOISE_WAVE    4
 
 
-#define VOLUME_MAX  16
+#define VOLUME_MAX  32
 #define SAMPLE      128
 
 #define CHANNELS    5
